@@ -8,6 +8,7 @@ use App\Models\Auth\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Auth\UserRole;
 
 class RegisterController extends Controller
 {
@@ -64,10 +65,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        // user_role tablosuna kullanıcıyı user olarak kaydet
+        $user_role = new UserRole();
+        $user_role->user_id = $user->id;
+        $user_role->role_id = 1;
+        $user_role->is_active = true;
+        $user_role->save(); 
+
+        return $user;
     }
 }
