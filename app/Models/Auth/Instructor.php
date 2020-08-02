@@ -18,4 +18,8 @@ class Instructor extends Model
   ];
 
   public $timestamps = true;
+
+  public function courses(){
+    return $this->hasMany('App\Models\Course\Course','instructor_id','id');
+  }
 }
