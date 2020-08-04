@@ -36,4 +36,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // user'ın sahip olduğu kursları getirir.
+    public function courses(){
+      return $this->hasMany('App\Models\Purchase\Purchase','to_who_id','id');
+    }
+
+    // user'ın satın aldığı kursları getirir.(Kendisine veya başkasına aldığı)
+    public function purchases(){
+      return $this->hasMany('App\Models\Purchase\Purchase','by_who_id','id');
+    }
+
+    // many to many ilişki var.
+    public function roles(){
+      return $this->belongsToMany('App\Models\Auth\Role','user_role','user_id','role_id');
+    }
 }
