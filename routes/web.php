@@ -25,6 +25,9 @@ Route::get('logout', 'Auth\LoginController@logout', function () {
 });
 
 Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
+
+    Route::get('/','Admin\HomeController@index')->name('admin_home_index');
+
     #category
     Route::get('/category/{$id}','Admin\CategoryController@get')->name('admin_category_get');
     Route::get('/categories','Admin\CategoryController@all')->name('admin_category_all');
